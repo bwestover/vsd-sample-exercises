@@ -225,3 +225,6 @@ public
 
 # DynamoDB Local files
 .dynamodb/
+
+# nodenv local override
+.node-version
