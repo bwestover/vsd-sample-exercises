@@ -2,12 +2,14 @@
 // provided as a convenience to get your started writing code faster.
 
 export class Robot {
+  // A list of all robot names used.
+  nameHistory = []
+
+  // A private robot name.
+  #name = ''
+
   constructor () {
-    // A list of all robot names used.
-    this.nameHistory = []
-    // This only pretends to be a private property since using this.#name is
-    // still an experimental feature in JavaScript.
-    this._name = this.newUniqueName()
+    this.#name = this.newUniqueName()
   }
 
   /**
@@ -16,7 +18,7 @@ export class Robot {
    * @return {string|*}
    */
   get name () {
-    return this._name
+    return this.#name
   }
 
   /**
@@ -62,7 +64,7 @@ export class Robot {
    * Replace the current name with a new unique one.
    */
   reset () {
-    this._name = this.newUniqueName()
+    this.#name = this.newUniqueName()
   }
 
 }
