@@ -3,7 +3,7 @@
 
 export class Robot {
   // A list of all robot names used.
-  nameHistory = []
+  static nameHistory = {}
 
   // A private robot name.
   #name = ''
@@ -50,13 +50,58 @@ export class Robot {
    * @return {string}
    */
   newUniqueName () {
-    const name = this.randomName()
+    let name = ''
+    do {
+      name = this.randomName()
+    } while (this.notUnique(name))
 
-    if (this.nameHistory.includes(name)) {
-      return this.newUniqueName()
+    this.addToHistory(name)
+    return name
+  }
+
+  /**
+   * Check if a name is not unique.
+   *
+   * @param name
+   * @return {boolean|*}
+   */
+  notUnique (name) {
+    const { alpha, numeric } = this.splitName(name)
+
+    if (Robot.nameHistory[alpha] !== undefined) {
+      return Robot.nameHistory[alpha].includes(numeric)
     } else {
-      this.nameHistory.push(name)
-      return name
+      return false
+    }
+  }
+
+  /**
+   * Add the name into the list of used names.
+   *
+   * @param name
+   */
+  addToHistory (name) {
+    const { alpha, numeric } = this.splitName(name)
+
+    if (Robot.nameHistory[alpha] !== undefined) {
+      Robot.nameHistory[alpha].push(numeric)
+    } else {
+      Robot.nameHistory[alpha] = [numeric]
+    }
+  }
+
+  /**
+   * Split the name into the alpha and numeric parts.
+   *
+   * @param name
+   * @return {{alpha: *, numeric: *}}
+   */
+  splitName (name) {
+    const alpha = name.substring(0, 2)
+    const numeric = name.substring(2)
+    return {
+      alpha,
+      numeric,
     }
   }
 
@@ -67,6 +112,11 @@ export class Robot {
     this.#name = this.newUniqueName()
   }
 
-}
+  /**
+   * Clear out all of the names used.
+   */
+  static releaseNames () {
+    Robot.nameHistory = {}
+  }
 
-Robot.releaseNames = () => { }
+}

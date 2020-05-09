@@ -93,7 +93,7 @@ describe('Robot', () => {
   });
 
   // This test is optional.
-  xtest('all the names can be generated', () => {
+  test('all the names can be generated', () => {
     const usedNames = new Set();
     usedNames.add(robot.name);
 
