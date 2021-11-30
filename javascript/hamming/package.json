@@ -31,5 +31,7 @@
     "lint-test": "eslint . && jest --no-cache ./* "
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "mkdirp": "^1.0.4"
+  }
 }
